@@ -20,12 +20,13 @@
 	<!-- custom -->
     <link rel="stylesheet" href="css/realtech-style.css">
     <link rel="stylesheet" href="assets/css/main.css" />
+	<script type="text/javascript" src="js/count.js"></script>
 	<!-- google font -->
 	<link href='//fonts.googleapis.com/css?family=Signika:400,300,600,700' rel='stylesheet' type='text/css'>
 	<link href='//fonts.googleapis.com/css?family=Chewy' rel='stylesheet' type='text/css'>
 
 </head>
-<body id="home" data-spy="scroll" data-target=".navbar-collapse">
+<body id="home" data-spy="scroll" data-target=".navbar-collapse"  onload="settimer()">
 
 	<!-- start navigation -->
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -68,7 +69,8 @@
 				<?php
 				if($_SESSION["username"]) {
 				?>
-				Welcome <b><?php echo $_SESSION["username"]; ?>.</b> Click here to <a href="logout.php" tite="Logout"><b><em>Logout.</b>
+			<center>	Welcome <b><?php echo $_SESSION["username"]; ?>.</b> Click here to <a href="logout.php" tite="Logout"><b><em>Logout.</b>
+				</center>
 				<?php
 				}
 				?>
@@ -82,25 +84,25 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<center> <h3> <p id="timer_value" > </p> </h3> </center>
 					<h1 class="text-uppercase"><a href="product.php">PRODUCT CATEGORIES</h1>
 				</div>
 				<div class="col-md-6 col-sm-6">					
 					<h3 class=""><marquee style="background-color:grey;">procurement made faster and easier</marquee></h3>
 						<ul><b>
-							<li><a href="laptop.php" style="color:black;">Laptops</a></li>
+							<li><a href="laptop.php?product_id=1" style="color:black;">Laptops</a></li>
 							<li><a href="desktop.php" style="color:black;">Desktops</a></li>
 							<li><a href="computer.php" style="color:black;">Computer Accessories</a></li>
-							<li><a href="stat.php" style="color:black;">Stationaries</a></li>
 							<li><a href="printers.php" style="color:black;">Printers</a></li>
 						</b></ul>
 					</div>
 				<div class="col-md-6 col-sm-6">
-					<img src="img/prime.jpg" class="img-responsive img-bordered img-about" alt="about img">
-						<center>
+					<img src="img/images.jpg" class="img-responsive img-bordered img-about" alt="about img">
+					<!--	<center>
 							<p><b>Stop bid at:$8000</b></p>
 							<p>Lowest Bidder:</p>
 							<input type="submit" name="bid"  value="Bid Now">
-						</center>
+						</center> -->
 				</div>
 			</div>
 		</div>

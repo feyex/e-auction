@@ -20,12 +20,13 @@
 	<!-- custom -->
     <link rel="stylesheet" href="css/realtech-style.css">
     <link rel="stylesheet" href="assets/css/main.css" />
+	<script type="text/javascript" src="js/count.js"></script>
 	<!-- google font -->
 	<link href='//fonts.googleapis.com/css?family=Signika:400,300,600,700' rel='stylesheet' type='text/css'>
 	<link href='//fonts.googleapis.com/css?family=Chewy' rel='stylesheet' type='text/css'>
 
 </head>
-<body id="home" data-spy="scroll" data-target=".navbar-collapse">
+<body id="home" data-spy="scroll" data-target=".navbar-collapse"  onload="">
 
 	<!-- start navigation -->
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -67,8 +68,10 @@
 				<td>
 				<?php
 				if($_SESSION["username"]) {
+					$bid_time="";
 				?>
-				Welcome <b><?php echo $_SESSION["username"]; ?>.</b> Click here to <a href="logout.php" tite="Logout"><b><em>Logout.</b>
+			<center>	Welcome <b><?php echo $_SESSION["username"]; ?>.</b> Click here to <a href="logout.php" tite="Logout"><b><em>Logout.</b>
+				</center>
 				<?php
 				}
 				?>
@@ -82,6 +85,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<center> <h3> <p id="timer_value" > </p> </h3> </center>
 					<h1 class="text-uppercase"><a href="product.php">PRODUCT CATEGORIES</a></h1>
 				</div>
 				<div class="col-md-6 col-sm-6">					
@@ -90,17 +94,104 @@
 							<li><a href="laptop.php" style="color:black;">Laptops</a></li>
 							<li><a href="desktop.php" style="color:black;">Desktops</a></li>
 							<li><a href="computer.php" style="color:black;">Computer Accessories</a></li>
-							<li><a href="stat.php" style="color:black;">Stationaries</a></li>
 							<li><a href="printers.php" style="color:black;">Printers</a></li>
 						</b></ul>
 					</div>
 				<div class="col-md-6 col-sm-6">
 					<img src="img/prime.jpg" class="img-responsive img-bordered img-about" alt="about img">
 						<center>
-							<p><b>Stop bid at:$8000</b></p>
-							<p>Lowest Bidder:</p>
-							<a href="blap.php"><input type="submit" name="bid"  value="Bid Now"></a>
+				
+							
+							<form method="post">
+
+				<?php
+											$connection=mysqli_connect("localhost","root","");		
+											$dbc=mysqli_select_db($connection,"project");
+											$id = 0;
+											if (isset ($_GET ['product_id']))
+												{
+													$id = $_GET ['product_id'];
+												}
+
+                                        	$sql = "select end_date,amount from product where product_id=1";
+                                            $product= mysqli_query ($connection,$sql);
+											$row = mysqli_fetch_array($product);
+							
+											//$date= date_create();
+											$date=date('Y-m-d');
+											 $end_date=$row['end_date'];
+
+											//echo $date;
+											if($end_date < $date)
+												{
+													//echo "bid expired";
+													//$end_date=$row['end_date'];
+													//header ("Location:bidreport.php");
+
+													$end_date=$row['end_date'];	
+													$time='BID EXPIRED'.'<input type="submit" name="bid"  value="Check Winner">';
+
+											//	echo $end_date;
+
+											"</form>";	
+												}
+												else {
+													$end_date=$row['end_date'];	
+													//echo $end_date;			
+													$time_left=strtotime($end_date);
+													$remaining=$time_left-time();
+													$days_rem=floor($remaining/86400);
+													$hours_rem=floor(($remaining%86400)/3600);
+													$min_rem=floor(($remaining%86400)/7200);
+													$sec_rem=floor(($remaining%86400)/10800);
+
+													$time=$days_rem."days ".$hours_rem."hours ".$min_rem."min ".$sec_rem."sec to bid closure"."</h3>".'<input type="submit" name="bid"  value="BID">';
+
+
+													
+												}
+
+?>
+<form method="post">
+<?php
+						if (isset($_POST['bid'])){
+
+							$sql1 = "select end_date from product where product_id=1";
+                                            $product= mysqli_query ($connection,$sql1) or die(mysqli_query ($connection));
+											$row1 = mysqli_fetch_array($product);
+							
+											//$date= date_create();
+											$date=date('Y-m-d');
+
+											if($row1['end_date'] < $date)
+												{
+													//echo "bid expired";
+													//$end_date=$row['end_date'];
+													header ("Location:bidreport.php");
+
+													$end_date=$row['end_date'];	
+													//$time="BID EXPIRED";
+												//	echo $end_date;
+
+											"</form>";		
+												}
+												else {
+													header ("Location:blap.php?product_id=1");
+												}
+						}
+
+
+					?>
+
+							<p><strong> LOWEST BID PRICE: <?php echo $row['amount'];?></stong></p>	
+							<p><strong><h3> Bid time: <?php echo $time;?></h3></stong></p>
+							
+						<!--	<input type="submit" name="bid"  value="Bid Now"> -->
 						</center>
+
+					</form>
+				
+						
 				</div>
 			</div>
 		</div>
@@ -120,7 +211,7 @@
 						<div class="gallery-des">
 							<h3>Blue Notebook </h3>
                             <h5>4GB RAM, 1TB HDD,core i5 processor</h5>
-                            <input type="submit" value="Bid Now">
+                    <a href="clap1.php?product_id=17"> <input type="submit" value="Bid Now"> </a>
 						</div>
 					</div>
 				</div>	
@@ -129,39 +220,23 @@
 						<img src="img/images.jpg" class="img-responsive gallery-img" alt="realtch 2">
 						<div class="gallery-des">
 							<h3>DELL INSPIRON 453</h3>
-							<h5><input type="submit" value="Bid Now"></h5>
+						<a href="dlap1.php?product_id=5">	<h5><input type="submit" value="Bid Now"></h5></a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 col-sm-4">
 					<div class="gallery-wrapper">
+					<a href="flap1.php?product_id=18"> 
 						<img src="img/laptop.jpg" class="img-responsive gallery-img" alt="realtch 3">
 						<div class="gallery-des">
 							<h3>HP PAVILION </h3>
-                            <h5>Core I5 500HD 8GB RAM</h5>
+                           <h5>Core I5 500HD 8GB RAM</h5> 
                             <input type="submit" value="Bid Now">
+							</a>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6 col-sm-6">
-					<div class="gallery-wrapper">
-						<img src="img/Bento-Book.jpg" class="img-responsive gallery-img" alt="realtch 4">
-						<div class="gallery-des">
-                            <h3>A Futuristic Laptop with all possible function to be bid for.</h3>
-                            <h5><input type="submit" value="Bid Now"></h5>
-							
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-sm-6">
-					<div class="gallery-wrapper">
-						<img src="img/iweb2.jpg" alt="realtch 5" class="img-responsive gallery-img">
-						<div class="gallery-des">
-							<h3>Black, High Definition iWeb Laptop for new age world.</h3>
-							<h5><input type="submit" value="Bid Now"></h5>
-						</div>
-				  </div>
-				</div>				
+						
 			</div>
 		</div>
 	</section>

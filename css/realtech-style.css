@@ -97,12 +97,12 @@ img
 /* end navigation */
 
 .tableheader {
-background-color: #95BEE6;
+background-color:rosybrown;
 color:white;
 font-weight:bold;
 }
 .tablerow {
-background-color: #A7D6F1;
+background-color: whitesmoke;
 color:black;
 font-weight:bold;
 }
@@ -592,3 +592,6 @@ IPHONE 4-4S-5 LANDSCAPE (568x320)
 background-color:#999999;
 opacity:0.6;}
 
+li a {
+  
+}

@@ -20,12 +20,13 @@
 	<!-- custom -->
     <link rel="stylesheet" href="css/realtech-style.css">
     <link rel="stylesheet" href="assets/css/main.css" />
+	<script type="text/javascript" src="js/count.js"></script>
 	<!-- google font -->
 	<link href='//fonts.googleapis.com/css?family=Signika:400,300,600,700' rel='stylesheet' type='text/css'>
 	<link href='//fonts.googleapis.com/css?family=Chewy' rel='stylesheet' type='text/css'>
 
 </head>
-<body id="home" data-spy="scroll" data-target=".navbar-collapse">
+<body id="home" data-spy="scroll" data-target=".navbar-collapse"  onload="settimer()">
 
 	<!-- start navigation -->
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -41,7 +42,7 @@
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="index.html" class="smoothScroll"><span class="icon fa-home"></span>HOME</a></li>
-					<li><a href="log-in.php">LOG-IN</a></li>
+					<li><a href="admin_login.php">ADMIN</a></li>
 				</ul>
 			</div>
 		</div>
@@ -56,23 +57,54 @@
 							<div class="inner">
 								<!-- Form -->
 								<div class="column">
+
+									<!--Display countdown timer in an element
+									<?php
+//$date=strtotime("february 25,2018 2:00 PM");
+//$remaining=$date-time();
+//$days_rem=floor($remaining/86400);
+/*$hours_rem=floor(($remaining%86400)/3600);
+$min_rem=floor(($remaining%86400)/7200);
+$sec_rem=floor(($remaining%86400)/10800);
+
+?> */
+// <?php echo $days_rem?>days and <?php echo $hours_rem ?> hours left and <?php echo $min_rem ?>minute and <?php echo $sec_rem ?>sec </h1>
+*/
+									<p id="demo"></p>
+										<script>
+											//Set the date we are counting down to
+											var countdownDate=new Date("Feb 25,2018 15:37:25").getTime();
+											//Update countdown every 1 second
+											var x=setInterval (function() 
+													{
+														//Get todays date
+														var now=new Date().getTime();
+														//Find the distance between now and the countdown date
+														var distance=countdownDate - now;
+														//Time calculations for days,hours,minute and seconds
+														var days=math.floor(distance/(1000 * 60*60*24));
+														var hours=math.floor((distance % (1000*60*60*24))/ (1000*60*60));
+														var minutes=math.floor((distance % (1000*60*60)) / (1000*60));
+														var seconds=math.floor((distance % (1000*60)) /1000);
+
+															//Display the result in the element with id='demo'
+															document.getElementById("demo").innerHTML = days +"d"+ hours +"h" +minutes+"m"+seconds+"s";
+
+															//if countowndown is completed
+																if (distance<0) 
+																{
+																	clearInterval(x);
+																	document.getElementById("demo").innerHTML="EXPIRED";
+																}
+
+													},1000);
+										</script>
+-->
+
+
 									<h3>LOG-IN</h3>
 									<form action="#" method="post">
-										<div class="field half first">
-											<label for="name">USERNAME</label>
-											<input name="username" id="name" type="text" placeholder="Name">
-										</div>
-										<div class="field half">
-											<label for="password">PASSWORD</label>
-											<input name="password" id="email" type="password" placeholder="password">
-										</div>
-										<ul class="actions">
-											<li><input value="LOG IN" class="button" type="submit"></li>
-                                        </ul>
-                                      <a href="login.php"><b>NOT REGISTERED YET? </b> </a>
-									</form>
-								
-			<?php
+										<?php
 		 		 //Create session
 		  				session_start();
 							$message ="";
@@ -81,7 +113,7 @@
 			   				$connection=mysqli_connect("localhost","root","");
 							$dbc=mysqli_select_db($connection,"project");
 				//Make the query
-							$query="SELECT * FROM login WHERE username='" . $_POST["username"] . "' and password='" . $_POST["password"] . "'  ";
+							$query="SELECT id,username, password FROM user WHERE username='" . $_POST["username"] . "' and password='" . $_POST["password"] . "'  ";
 
 				//Run the query
 							$result=mysqli_query ($connection,$query);
@@ -107,6 +139,23 @@
 							}
 		  	?>
        
+										<center> <h3 style="color:white;"> <p id="timer_value" > </p> </h3> </center>
+
+										<div class="field half first">
+											<label for="name">USERNAME</label>
+											<input name="username" id="name" type="text" placeholder="Name">
+										</div>
+										<div class="field half">
+											<label for="password">PASSWORD</label>
+											<input name="password" id="email" type="password" placeholder="password">
+										</div>
+										<ul class="actions">
+											<li><input value="LOG IN" class="button" type="submit"></li>
+                                        </ul>
+                                      <a href="register.php"><b>NOT REGISTERED YET? </b> </a>
+									</form>
+								
+			
 
 
 							</div>

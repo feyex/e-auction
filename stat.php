@@ -20,12 +20,13 @@
 	<!-- custom -->
     <link rel="stylesheet" href="css/realtech-style.css">
     <link rel="stylesheet" href="assets/css/main.css" />
+	<script type="text/javascript" src="js/count.js"></script>
 	<!-- google font -->
 	<link href='//fonts.googleapis.com/css?family=Signika:400,300,600,700' rel='stylesheet' type='text/css'>
 	<link href='//fonts.googleapis.com/css?family=Chewy' rel='stylesheet' type='text/css'>
 
 </head>
-<body id="home" data-spy="scroll" data-target=".navbar-collapse">
+<body id="home" data-spy="scroll" data-target=".navbar-collapse"  onload="settimer()">
 
 	<!-- start navigation -->
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -82,6 +83,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<center> <h3> <p id="timer_value" > </p> </h3> </center>
 					<h1 class="text-uppercase"><a href="product.php">PRODUCT CATEGORIES</a></h1>
 				</div>
 				<div class="col-md-6 col-sm-6">					

@@ -1609,3 +1609,35 @@
 			}
 
 		}
+
+	#admin {
+		display: -ms-flexbox;
+		-ms-flex-pack: center;
+		-ms-flex-align: center;
+		padding: 8em 0 6em 0;
+		-moz-align-items: center;
+		-webkit-align-items: center;
+		-ms-align-items: center;
+		align-items: center;
+		display: -moz-flex;
+		display: -webkit-flex;
+		display: -ms-flex;
+		display: flex;
+		-moz-justify-content: center;
+		-webkit-justify-content: center;
+		-ms-justify-content: center;
+		justify-content: center;
+		min-height: 60vh;
+		height: 60vh;
+		position: relative;
+		background:lavender;
+		background-image: url(../../img/.jpg);
+		background-size: cover;
+		background-attachment: scroll;
+		background-repeat: no-repeat;
+		background-position: center;
+		text-align: center;
+		color:blue;
+	}
+
+		

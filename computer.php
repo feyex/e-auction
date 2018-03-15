@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -19,13 +19,14 @@
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<!-- custom -->
     <link rel="stylesheet" href="css/realtech-style.css">
-    <link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<script type="text/javascript" src="js/countdown.js"></script>
 	<!-- google font -->
 	<link href='//fonts.googleapis.com/css?family=Signika:400,300,600,700' rel='stylesheet' type='text/css'>
 	<link href='//fonts.googleapis.com/css?family=Chewy' rel='stylesheet' type='text/css'>
 
 </head>
-<body id="home" data-spy="scroll" data-target=".navbar-collapse">
+<body id="home" data-spy="scroll" data-target=".navbar-collapse" onload="settimer()">
 
 	<!-- start navigation -->
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -68,7 +69,7 @@
 				<?php
 				if($_SESSION["username"]) {
 				?>
-				Welcome <b><?php echo $_SESSION["username"]; ?>.</b> Click here to <a href="logout.php" tite="Logout"><b><em>Logout.</b>
+				Welcome <b><?php echo $_SESSION["username"]; ?>.</b> Click here to <a href="logout.php" tite="Logout"><b><em>Logout.</b><br>
 				<?php
 				}
 				?>
@@ -80,27 +81,112 @@
 <!--main content-->
        <section id="about" class="templatemo-section templatemo-top-130">
 		<div class="container">
+			 
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<h1 class="text-uppercase"><a href="product.php">PRODUCT CATEGORIES</a></h1>
 				</div>
+
+				<center> <h3> <p id="timer_value" ></p> </h3> </center>
+				 
 				<div class="col-md-6 col-sm-6">					
 					<h3 class=""><marquee style="background-color:grey;">procurement made faster and easier</marquee></h3>
 						<ul><b>
 							<li><a href="laptop.php" style="color:black;">Laptops</a></li>
 							<li><a href="desktop.php" style="color:black;">Desktops</a></li>
 							<li><a href="computer.php" style="color:black;">Computer Accessories</a></li>
-							<li><a href="stat.php" style="color:black;">Stationaries</a></li>
 							<li><a href="printers.php" style="color:black;">Printers</a></li>
 						</b></ul>
 					</div>
 				<div class="col-md-6 col-sm-6">
 					<img src="img/phones/bag.jpg" class="img-responsive img-bordered img-about" alt="about img">
 						<center>
-							<p><b>Stop bid at:$8000</b></p>
-							<p>Lowest Bidder:</p>
-							<input type="submit" name="bid"  value="Bid Now">
+							
+
+				<?php
+											$connection=mysqli_connect("localhost","root","");		
+											$dbc=mysqli_select_db($connection,"project");
+											$id = 0;
+											if (isset ($_GET ['product_id']))
+												{
+													$id = $_GET ['product_id'];
+												}
+
+                                        	$sql = "select end_date,amount from product where product_id=9";
+                                            $product= mysqli_query ($connection,$sql);
+											$row = mysqli_fetch_array($product);
+							
+											//$date= date_create();
+											$date=date('Y-m-d');
+
+											if($row['end_date'] < $date)
+												{
+													//echo "bid expired";
+													//$end_date=$row['end_date'];
+													// header ("Location:bidreport.php");
+
+													$end_date=$row['end_date'];	
+													$time='BID EXPIRED'.'<input type="submit" name="bid"  value="Check Winner">';
+
+												//	echo $end_date;
+
+												"</form>";	
+												}
+												else {
+													$end_date=$row['end_date'];	
+													//echo $end_date;			
+													$time_left=strtotime($end_date);
+													$remaining=$time_left-time();
+													$days_rem=floor($remaining/86400);
+													$hours_rem=floor(($remaining%86400)/3600);
+													$min_rem=floor(($remaining%86400)/7200);
+													$sec_rem=floor(($remaining%86400)/10800);
+
+													$time=$days_rem."days ".$hours_rem."hours ".$min_rem."min ".$sec_rem."sec to bid closure"."</h3>".'<input type="submit" name="bid"  value="BID">';
+
+
+													
+												}
+
+?>
+<form method="post">
+<?php
+						if (isset($_POST['bid'])){
+
+							$sql1 = "select end_date from product where product_id=1";
+                                            $product= mysqli_query ($connection,$sql1) or die(mysqli_query ($connection));
+											$row1 = mysqli_fetch_array($product);
+							
+											//$date= date_create();
+											$date=date('Y-m-d');
+
+											if($row1['end_date'] < $date)
+												{
+													//echo "bid expired";
+													//$end_date=$row['end_date'];
+													header ("Location:bidreport4.php");
+
+													$end_date=$row['end_date'];	
+													//$time="BID EXPIRED";
+												//	echo $end_date;
+
+											"</form>";		
+												}
+												else {
+													header ("Location:compb.php?product_id=9");
+												}
+						}
+
+
+					?>
+
+							<p><strong> LOWEST BID PRICE: <?php echo $row['amount'];?></stong></p>	
+							<p><strong><h3> Bid time: <?php echo $time;?></h3></stong></p>
+							
+						<!--	<input type="submit" name="bid"  value="Bid Now"> -->
 						</center>
+
+					</form>
 				</div>
 			</div>
 		</div>
@@ -120,7 +206,7 @@
 						<div class="gallery-des">
 							<h3>Black Powerbank </h3>
                             <h5>Fast, adaptive 4500 MHZ Powerbank</h5>
-                            <input type="submit" value="Bid Now">
+                        <a href="compc.php?product_id=12">   <input type="submit" value="Bid Now"></a>
 						</div>
 					</div>
 				</div>	
@@ -129,7 +215,7 @@
 						<img src="img/phones/generics.jpg" class="img-responsive gallery-img" alt="realtch 2">
 						<div class="gallery-des">
 							<h3>Computer Accessories</h3>
-							<h5><input type="submit" value="Bid Now"></h5>
+						<a href="compd.php?product_id=13">	<h5><input type="submit" value="Bid Now"></h5></a>
 						</div>
 					</div>
 				</div>
@@ -139,7 +225,7 @@
 						<div class="gallery-des">
 							<h3>UPS Blue Gate </h3>
                             <h5></h5>
-                            <input type="submit" value="Bid Now">
+                         <a href="compe.php?product_id=14">   <input type="submit" value="Bid Now"></a>
 						</div>
 					</div>
 				</div>
